@@ -38,8 +38,6 @@ public class ConnectRequest {
     /**
      * 连接类型
      */
-//    private ConnectType connectType = ConnectType.PWD;
-
     private String connectType;
 
     /**

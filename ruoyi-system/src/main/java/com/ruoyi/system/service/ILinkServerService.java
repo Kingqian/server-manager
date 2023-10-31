@@ -1,6 +1,7 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.system.domain.LinkServer;
+import com.ruoyi.system.request.ConnectRequest;
 
 import java.util.List;
 
@@ -59,4 +60,11 @@ public interface ILinkServerService
      * @return 结果
      */
     public int deleteLinkServerByServerId(Long serverId);
+
+    /**
+     * 测试服务器连接
+     * @param request
+     * @return
+     */
+    int connect(ConnectRequest request);
 }
