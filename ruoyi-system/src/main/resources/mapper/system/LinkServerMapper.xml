@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.LinkServerMapper">
+    
+    <resultMap type="LinkServer" id="LinkServerResult">
+        <result property="serverId"    column="server_id"    />
+        <result property="account"    column="account"    />
+        <result property="ip"    column="ip"    />
+        <result property="name"    column="name"    />
+        <result property="password"    column="password"    />
+        <result property="port"    column="port"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="timeout"    column="timeout"    />
+        <result property="privateKey"    column="private_key"    />
+        <result property="connectType"    column="connect_type"    />
+        <result property="deployEnv"    column="deploy_env"    />
+    </resultMap>
+
+    <sql id="selectLinkServerVo">
+        select server_id, account, ip, name, password, port, create_by, update_by, create_time, update_time, timeout, private_key, connect_type, deploy_env from link_server
+    </sql>
+
+    <select id="selectLinkServerList" parameterType="LinkServer" resultMap="LinkServerResult">
+        <include refid="selectLinkServerVo"/>
+        <where>  
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="ip != null  and ip != ''"> and ip = #{ip}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="port != null "> and port = #{port}</if>
+            <if test="timeout != null "> and timeout = #{timeout}</if>
+            <if test="privateKey != null  and privateKey != ''"> and private_key = #{privateKey}</if>
+            <if test="connectType != null  and connectType != ''"> and connect_type = #{connectType}</if>
+            <if test="deployEnv != null  and deployEnv != ''"> and deploy_env = #{deployEnv}</if>
+        </where>
+    </select>
+    
+    <select id="selectLinkServerByServerId" parameterType="Long" resultMap="LinkServerResult">
+        <include refid="selectLinkServerVo"/>
+        where server_id = #{serverId}
+    </select>
+        
+    <insert id="insertLinkServer" parameterType="LinkServer" useGeneratedKeys="true" keyProperty="serverId">
+        insert into link_server
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="account != null">account,</if>
+            <if test="ip != null">ip,</if>
+            <if test="name != null">name,</if>
+            <if test="password != null">password,</if>
+            <if test="port != null">port,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="timeout != null">timeout,</if>
+            <if test="privateKey != null">private_key,</if>
+            <if test="connectType != null">connect_type,</if>
+            <if test="deployEnv != null">deploy_env,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="account != null">#{account},</if>
+            <if test="ip != null">#{ip},</if>
+            <if test="name != null">#{name},</if>
+            <if test="password != null">#{password},</if>
+            <if test="port != null">#{port},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="timeout != null">#{timeout},</if>
+            <if test="privateKey != null">#{privateKey},</if>
+            <if test="connectType != null">#{connectType},</if>
+            <if test="deployEnv != null">#{deployEnv},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLinkServer" parameterType="LinkServer">
+        update link_server
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="account != null">account = #{account},</if>
+            <if test="ip != null">ip = #{ip},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="timeout != null">timeout = #{timeout},</if>
+            <if test="privateKey != null">private_key = #{privateKey},</if>
+            <if test="connectType != null">connect_type = #{connectType},</if>
+            <if test="deployEnv != null">deploy_env = #{deployEnv},</if>
+        </trim>
+        where server_id = #{serverId}
+    </update>
+
+    <delete id="deleteLinkServerByServerId" parameterType="Long">
+        delete from link_server where server_id = #{serverId}
+    </delete>
+
+    <delete id="deleteLinkServerByServerIds" parameterType="String">
+        delete from link_server where server_id in 
+        <foreach item="serverId" collection="array" open="(" separator="," close=")">
+            #{serverId}
+        </foreach>
+    </delete>
+
+</mapper>

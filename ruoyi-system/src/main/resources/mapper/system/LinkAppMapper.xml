@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.LinkAppMapper">
+    
+    <resultMap type="LinkApp" id="LinkAppResult">
+        <result property="appId"    column="app_id"    />
+        <result property="name"    column="name"    />
+        <result property="uploadPath"    column="upload_path"    />
+        <result property="deployPath"    column="deploy_path"    />
+        <result property="backupPath"    column="backup_path"    />
+        <result property="port"    column="port"    />
+        <result property="startScript"    column="start_script"    />
+        <result property="stopScript"    column="stop_script"    />
+        <result property="deployScript"    column="deploy_script"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectLinkAppVo">
+        select app_id, name, upload_path, deploy_path, backup_path, port, start_script, stop_script, deploy_script, create_by, update_by, create_time, update_time from link_app
+    </sql>
+
+    <select id="selectLinkAppList" parameterType="LinkApp" resultMap="LinkAppResult">
+        <include refid="selectLinkAppVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="uploadPath != null  and uploadPath != ''"> and upload_path = #{uploadPath}</if>
+            <if test="deployPath != null  and deployPath != ''"> and deploy_path = #{deployPath}</if>
+            <if test="backupPath != null  and backupPath != ''"> and backup_path = #{backupPath}</if>
+            <if test="port != null "> and port = #{port}</if>
+            <if test="startScript != null  and startScript != ''"> and start_script = #{startScript}</if>
+            <if test="stopScript != null  and stopScript != ''"> and stop_script = #{stopScript}</if>
+            <if test="deployScript != null  and deployScript != ''"> and deploy_script = #{deployScript}</if>
+        </where>
+    </select>
+    
+    <select id="selectLinkAppByAppId" parameterType="Long" resultMap="LinkAppResult">
+        <include refid="selectLinkAppVo"/>
+        where app_id = #{appId}
+    </select>
+        
+    <insert id="insertLinkApp" parameterType="LinkApp" useGeneratedKeys="true" keyProperty="appId">
+        insert into link_app
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="uploadPath != null">upload_path,</if>
+            <if test="deployPath != null">deploy_path,</if>
+            <if test="backupPath != null">backup_path,</if>
+            <if test="port != null">port,</if>
+            <if test="startScript != null">start_script,</if>
+            <if test="stopScript != null">stop_script,</if>
+            <if test="deployScript != null">deploy_script,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="uploadPath != null">#{uploadPath},</if>
+            <if test="deployPath != null">#{deployPath},</if>
+            <if test="backupPath != null">#{backupPath},</if>
+            <if test="port != null">#{port},</if>
+            <if test="startScript != null">#{startScript},</if>
+            <if test="stopScript != null">#{stopScript},</if>
+            <if test="deployScript != null">#{deployScript},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLinkApp" parameterType="LinkApp">
+        update link_app
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="uploadPath != null">upload_path = #{uploadPath},</if>
+            <if test="deployPath != null">deploy_path = #{deployPath},</if>
+            <if test="backupPath != null">backup_path = #{backupPath},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="startScript != null">start_script = #{startScript},</if>
+            <if test="stopScript != null">stop_script = #{stopScript},</if>
+            <if test="deployScript != null">deploy_script = #{deployScript},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where app_id = #{appId}
+    </update>
+
+    <delete id="deleteLinkAppByAppId" parameterType="Long">
+        delete from link_app where app_id = #{appId}
+    </delete>
+
+    <delete id="deleteLinkAppByAppIds" parameterType="String">
+        delete from link_app where app_id in 
+        <foreach item="appId" collection="array" open="(" separator="," close=")">
+            #{appId}
+        </foreach>
+    </delete>
+
+</mapper>
