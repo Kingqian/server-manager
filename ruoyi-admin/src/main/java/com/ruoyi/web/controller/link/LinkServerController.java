@@ -9,6 +9,8 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.LinkServer;
 import com.ruoyi.system.request.ConnectRequest;
 import com.ruoyi.system.service.ILinkServerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import java.util.List;
  * @author tjq
  * @date 2023-10-31
  */
+@Api("服务器管理")
 @Controller
 @RequestMapping("/system/server")
 public class LinkServerController extends BaseController {
@@ -30,6 +33,7 @@ public class LinkServerController extends BaseController {
 
     @Autowired
     private ILinkServerService linkServerService;
+
 
     @RequiresPermissions("system:server:view")
     @GetMapping()
@@ -40,6 +44,7 @@ public class LinkServerController extends BaseController {
     /**
      * 查询服务器管理列表
      */
+    @ApiOperation("查询服务器管理列表")
     @RequiresPermissions("system:server:list")
     @PostMapping("/list")
     @ResponseBody
@@ -65,6 +70,7 @@ public class LinkServerController extends BaseController {
     /**
      * 新增服务器管理
      */
+    @ApiOperation("新增服务器管理")
     @GetMapping("/add")
     public String add() {
         return prefix + "/add";
@@ -73,6 +79,7 @@ public class LinkServerController extends BaseController {
     /**
      * 新增保存服务器管理
      */
+    @ApiOperation("新增保存服务器管理")
     @RequiresPermissions("system:server:add")
     @Log(title = "服务器管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -84,6 +91,7 @@ public class LinkServerController extends BaseController {
     /**
      * 修改服务器管理
      */
+    @ApiOperation("修改服务器管理")
     @RequiresPermissions("system:server:edit")
     @GetMapping("/edit/{serverId}")
     public String edit(@PathVariable("serverId") Long serverId, ModelMap mmap) {
@@ -95,6 +103,7 @@ public class LinkServerController extends BaseController {
     /**
      * 修改保存服务器管理
      */
+    @ApiOperation("修改保存服务器管理")
     @RequiresPermissions("system:server:edit")
     @Log(title = "服务器管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -106,6 +115,7 @@ public class LinkServerController extends BaseController {
     /**
      * 删除服务器管理
      */
+    @ApiOperation("删除服务器管理")
     @RequiresPermissions("system:server:remove")
     @Log(title = "服务器管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
@@ -120,6 +130,7 @@ public class LinkServerController extends BaseController {
      * @param request
      * @return
      */
+    @ApiOperation("测试服务器连接")
     @RequiresPermissions("system:server:connect")
     @PostMapping("/connect")
     @ResponseBody

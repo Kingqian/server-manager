@@ -30,8 +30,8 @@ public class JSHService implements JSHApi {
 
     private Logger log = LoggerFactory.getLogger(JSHService.class);
 
-    Map<String, Session> ipMap = new HashMap<>();
-    Map<Session, String> sessionMap = new HashMap<>();
+    private static final Map<String, Session> ipMap = new HashMap<>();
+    private static final Map<Session, String> sessionMap = new HashMap<>();
 
     @Override
     public Session connect(ConnectRequest request) {
@@ -42,7 +42,7 @@ public class JSHService implements JSHApi {
         try {
             JSch jsch = new JSch();
             Session session = jsch.getSession(request.getUserName(), request.getIpAddress(), request.getPort());
-            if (Objects.equals(request.getConnectType(), ConnectType.PRIVATEKEY.getValue())) {
+            if (Objects.equals(request.getConnectType(), ConnectType.PRIVATEKEY)) {
                 session.setConfig("PreferredAuthentications", "publickey");
                 session.setConfig("userauth.gssapi-with-mic", "no");
                 session.setConfig("StrictHostKeyChecking", "no");
@@ -63,7 +63,7 @@ public class JSHService implements JSHApi {
             return session;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new RuntimeException("连接异常", e);
+            throw new RuntimeException(e.getMessage(),e);
         }
     }
 
